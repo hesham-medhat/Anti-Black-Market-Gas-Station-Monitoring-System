@@ -22,3 +22,30 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.historyTable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .historyTable td, .historyTable th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .historyTable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .historyTable tr:hover {
+        background-color: #ddd;
+    }
+
+    .historyTable th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #000;
+        color: white;
+    }

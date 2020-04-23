@@ -34,7 +34,6 @@ namespace GSMS
         public virtual DbSet<GasStation> GasStations { get; set; }
         public virtual DbSet<Investigator> Investigators { get; set; }
         public virtual DbSet<RefillHistory> RefillHistories { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TransactionHistory> TransactionHistories { get; set; }
         public virtual DbSet<UnderInvestigation> UnderInvestigations { get; set; }
         public virtual DbSet<User> Users { get; set; }

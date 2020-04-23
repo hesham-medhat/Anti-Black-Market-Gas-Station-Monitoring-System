@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Citizen";
+    @model Citizen
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Remaining fuel ammount</h2>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="@Model.Quota" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                <span>you still have @Model.Quota littres</span>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+    </div>
+
+    <div>
+        <h2>Transaction History</h2>
+        <table id="transactionHistory" class="historyTable">
+            <tr>
+                <th>Gas Station</th>
+                <th>Quantity</th>
+                <th>Date</th>
+            </tr>
+            @foreach (TransactionHistory i in Model.TransactionHistories)
+            {
+                <tr>
+                    <td>@i.GasStation.Name</td>
+                    <td>@i.Quantity</td>
+                    <td>@i.Datetime</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+</div>
+
