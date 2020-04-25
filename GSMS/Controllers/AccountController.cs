@@ -426,11 +426,11 @@ namespace GSMS.Controllers
 
         public ActionResult Admin()
         {
-            // Determine the user's Role. 
-            // var Role = "GetRole()";
+            // Determine the user's role. 
+            // var role = "GetRole()";
             Entities db = new Entities();
             User user = db.Users.Find(User.Identity.GetUserId());
-            int role = (int)user.Role;
+            int role = (int)user.role;
             if (role == 0)
             {
                 GasStation gs = db.GasStations.SingleOrDefault(b => b.Id == user.Id);
