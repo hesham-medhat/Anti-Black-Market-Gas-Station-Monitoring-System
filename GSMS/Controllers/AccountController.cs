@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GSMS.Models;
+using GSMS.Services;
 
 namespace GSMS.Controllers
 {
@@ -17,9 +18,11 @@ namespace GSMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly UserService _serService;
 
         public AccountController()
         {
+            _serService = new UserService();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -151,11 +154,24 @@ namespace GSMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Role = model.Role };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    switch (model.Role)
+                    {
+                        case 0:
+                            _serService.CreateGasStation(model.Email, model.Name);
+                            break;
+                        case 2:
+                            _serService.CreateInvestigator(model.Email, model.Name);
+                            break;
+                        default:
+                            _serService.CreateCitizen(model.Email, model.Name);
+                            break;
+                    }
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -426,26 +442,27 @@ namespace GSMS.Controllers
 
         public ActionResult Admin()
         {
-            // Determine the user's role. 
-            // var role = "GetRole()";
-            Entities db = new Entities();
-            User user = db.Users.Find(User.Identity.GetUserId());
-            int role = (int)user.role;
-            if (role == 0)
+            if (User.Identity.IsAuthenticated)
             {
-                GasStation gs = db.GasStations.SingleOrDefault(b => b.Id == user.Id);
-                Session["user"] = gs;
-                return View("../GasStation/AdministrationGasStation", gs);
+                User user = _serService.getUser(User.Identity.GetUserId());
+                int role = (int)user.Role;
+                if (role == 0)
+                {
+                    GasStation gs = _serService.getStation(user.Id);
+                    Session["user"] = gs;
+                    return View("../GasStation/AdministrationGasStation", gs);
+                }
+                else if (role == 1)
+                {
+                    Citizen citizen = _serService.getCitizen(user.Id);
+                    Session["user"] = citizen;
+                    return View("../Citizen/AdministrationCitizen", citizen);
+                }
+                else if (role == 2)
+                    return View("AdministrationInvestigator");
+                return View("../Home/Index");
             }
-            else if (role == 1)
-            {
-                Citizen citizen = db.Citizens.SingleOrDefault(b => b.Id == user.Id);
-                Session["user"] = citizen;
-                return View("../Citizen/AdministrationCitizen", citizen);
-            }
-            else if (role == 2)
-                return View("AdministrationInvestigator");
-           return View("../Home/Index");
+            return RedirectToAction("Index", "Home");
         }
 
         #region Helpers

@@ -90,6 +90,7 @@
           <Property Name="Quantity" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
           <Property Name="GasStationID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Granted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TransactionHistory">
           <Key>
@@ -126,7 +127,7 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="role" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="Role" Type="int" />
         </EntityType>
         <Association Name="FK_Citizen_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -472,6 +473,7 @@
           <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="GasStationID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="GasStation" Relationship="Self.FK_RefillHistory_GasStation" FromRole="RefillHistory" ToRole="GasStation" />
+          <Property Name="Granted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="TransactionHistory">
           <Key>
@@ -518,7 +520,7 @@
           <NavigationProperty Name="GasStation" Relationship="Self.FK_GasStation_User" FromRole="User" ToRole="GasStation" />
           <NavigationProperty Name="Investigator" Relationship="Self.FK_Investigator_User" FromRole="User" ToRole="Investigator" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="User" ToRole="AspNetRoles" />
-          <Property Name="role" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="Role" Type="Int32" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_User_UserId">
           <End Role="User" Type="Self.User" Multiplicity="1">
@@ -821,6 +823,7 @@
           <EntitySetMapping Name="RefillHistories">
             <EntityTypeMapping TypeName="GSMSModel.RefillHistory">
               <MappingFragment StoreEntitySet="RefillHistory">
+                <ScalarProperty Name="Granted" ColumnName="Granted" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Datetime" ColumnName="Datetime" />
                 <ScalarProperty Name="GasStationID" ColumnName="GasStationID" />
@@ -849,7 +852,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="GSMSModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />

@@ -23,12 +23,23 @@
             <tr>
                 <th>Quantity</th>
                 <th>Date</th>
+                <th>Status</th>
             </tr>
             @foreach (RefillHistory i in Model.RefillHistories)
             {
                 <tr>
                     <td>@i.Quantity</td>
                     <td>@i.Datetime</td>
+                    <td>
+                        @if (i.Granted)
+                        {
+                            <button class="btn-success">Granted</button>
+                        }
+                        else
+                        {
+                            <button class="btn-danger">Susbicious Transaction(Not Granted)</button>
+                        }
+                    </td>
                 </tr>
             }
         </table>
@@ -36,7 +47,7 @@
     <div class="col-md-4">
         <h2>Request refill</h2>
         <section id="refillForm">
-            @using (Html.BeginForm("refill", "GasStation", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Refill", "GasStation", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
             {
                 <div class="form-group">
                     <input class="form-control" type="number" name="refillQuantity" value="" placeholder="Quantity needed" />

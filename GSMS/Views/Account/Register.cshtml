@@ -12,6 +12,12 @@
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
@@ -27,6 +33,16 @@
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select class="form-control input-validation-error" data-val="true" data-val-number="The field Role must be a number." data-val-required="The Role field is required." id="Role" multiple="multiple" name="Role" aria-describedby="Role-error" aria-invalid="true">
+                <option value="0">Gas Staion</option>
+                <option value="1">Citizen</option>
+                <option value="2">Investigator</option>
+            </select>
         </div>
     </div>
     <div class="form-group">

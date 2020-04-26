@@ -17,6 +17,7 @@ namespace GSMS
         public decimal Quantity { get; set; }
         public System.DateTime Datetime { get; set; }
         public string GasStationID { get; set; }
+        public bool Granted { get; set; }
     
         public virtual GasStation GasStation { get; set; }
     }
