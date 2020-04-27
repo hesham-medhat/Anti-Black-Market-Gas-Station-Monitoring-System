@@ -7,7 +7,7 @@ namespace GSMS.Services
     {
 
         private Entities db = new Entities();
-        internal void SubmitRefill(int refillQuantity, string Id, bool grant)
+        public void SubmitRefill(int refillQuantity, string Id, bool grant)
         {
             GasStation res = db.GasStations.SingleOrDefault(b => b.Id == Id);
             if (refillQuantity > 0)
@@ -23,6 +23,7 @@ namespace GSMS.Services
             }
             if (!grant)
             {
+                /*
                 UnderInvestigation susbicious = new UnderInvestigation()
                 {
                     GasStationId = Id,
@@ -30,6 +31,7 @@ namespace GSMS.Services
                     IssueDatetime = DateTime.Now
                 };
                 db.UnderInvestigations.Add(susbicious);
+                */
             }
             else
             {
@@ -41,14 +43,15 @@ namespace GSMS.Services
             db.SaveChanges();
         }
 
-        internal void SubmitServeUSer(int serveUserQuantity, string userName, string Id)
+        public void SubmitServeUSer(int serveUserQuantity, string userName, string Id)
         {
             Citizen res = db.Citizens.SingleOrDefault(b => b.Name == userName);
             GasStation stationres = db.GasStations.SingleOrDefault(b => b.Id == Id);
             if (res != null
                 && stationres != null
                 && res.Quota >= serveUserQuantity
-                && stationres.EstimatedFuelQuantity >= serveUserQuantity)
+                && stationres.EstimatedFuelQuantity >= serveUserQuantity
+                && serveUserQuantity > 0)
             {
                 res.Quota -= serveUserQuantity;
                 stationres.EstimatedFuelQuantity -= serveUserQuantity;

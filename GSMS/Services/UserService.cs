@@ -7,22 +7,22 @@ namespace GSMS.Services
     {
         private Entities db = new Entities();
 
-        internal User getUser(string Id)
+        public User getUser(string Id)
         {
             return db.Users.SingleOrDefault(b => b.Id == Id);
         }
 
-        internal GasStation getStation(string Id)
+        public GasStation getStation(string Id)
         {
             return db.GasStations.SingleOrDefault(b => b.Id == Id);
         }
 
-        internal Citizen getCitizen(string Id)
+        public Citizen getCitizen(string Id)
         {
             return db.Citizens.SingleOrDefault(b => b.Id == Id);
         }
 
-        internal void CreateGasStation(string Email, string Name)
+        public void CreateGasStation(string Email, string Name)
         {
             User user = db.Users.SingleOrDefault(b => b.Email == Email);
             GasStation gasStation = new GasStation() { 
@@ -35,12 +35,12 @@ namespace GSMS.Services
             db.SaveChanges();
         }
 
-        internal void CreateInvestigator(string Id, string Name)
+        public void CreateInvestigator(string Id, string Name)
         {
             throw new NotImplementedException();
         }
 
-        internal void CreateCitizen(string Email, string Name)
+        public void CreateCitizen(string Email, string Name)
         {
             User user = db.Users.SingleOrDefault(b => b.Email == Email);
             Citizen citizen = new Citizen() { 
