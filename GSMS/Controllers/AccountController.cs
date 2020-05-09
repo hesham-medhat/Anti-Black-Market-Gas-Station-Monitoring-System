@@ -459,7 +459,11 @@ namespace GSMS.Controllers
                     return View("../Citizen/AdministrationCitizen", citizen);
                 }
                 else if (role == 2)
-                    return View("AdministrationInvestigator");
+                {
+                    Investigator investigator = _serService.getInvestigator(user.Id);
+                    Session["user"] = investigator;
+                    return View("../Investigator/AdministrationInvestigator", investigator);
+                }
                 return View("../Home/Index");
             }
             return RedirectToAction("Index", "Home");

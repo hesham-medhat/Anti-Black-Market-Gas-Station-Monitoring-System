@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Investigator";
+    @model Investigator
+}
+
+<div class="row">
+    <div>
+        <h2>Susbicous Gas Stations</h2>
+        <table id="susbicousGasStations" class="historyTable">
+            <tr>
+                <th>Gas Station</th>
+                <th>Date</th>
+                <th>Explore</th>
+                <th>Respond</th>
+            </tr>
+            @foreach (UnderInvestigation i in Model.UnderInvestigations)
+            {
+                <tr>
+                    <td>@i.GasStation.Name</td>
+                    <td>@i.IssueDatetime</td>
+                    <td>
+                        <div id="GasStationmodal'@i.GasStationId" class="modal">
+                            <div class="modal-content">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <div class="row">
+                                    <h2>Remaining fuel ammount</h2>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="@((i.GasStation.EstimatedFuelQuantity / i.GasStation.TotalTankSize) * 100)"
+                                             aria-valuemin="0" aria-valuemax="100" style="width:@((i.GasStation.EstimatedFuelQuantity / i.GasStation.TotalTankSize) * 100)%">
+                                            <span>@i.GasStation.EstimatedFuelQuantity / @i.GasStation.TotalTankSize</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h2>Refill History</h2>
+                                    <table id="susbicousRefills" class="historyTable">
+                                        <tr>
+                                            <th>Quantity</th>
+                                            <th>Date</th>
+                                            <th>status</th>
+                                        </tr>
+                                        @foreach (RefillHistory j in i.GasStation.RefillHistories)
+                                        {
+                                            <tr>
+                                                <td>@j.Quantity</td>
+                                                <td>@j.Datetime</td>
+                                                <td>
+                                                    @if (j.Granted)
+                                                    {
+                                                        <button class="btn-success">Granted</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn-danger">Susbicious Transaction(Not Granted)</button>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                                <div class="col-md-4">
+                                    <h2>Transactions</h2>
+                                    <table id="susbicousTransactions" class="historyTable">
+                                        <tr>
+                                            <th>Citizen</th>
+                                            <th>Quantity</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        @foreach (TransactionHistory j in i.GasStation.TransactionHistories)
+                                        {
+                                            <tr>
+                                                <td>@j.Citizen.Name</td>
+                                                <td>@j.Quantity</td>
+                                                <td>@j.Datetime</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h2>Previous Violation</h2>
+                                    @{
+                                        FlaggedStation station = i.GasStation.FlaggedStation;
+                                        if (station == null)
+                                        {
+                                            <button class="btn-success">No Violation</button>
+                                        }
+                                        else
+                                        {
+                                            int x = i.GasStation.FlaggedStation.Severity;
+                                            switch (x)
+                                            {
+                                                case 0:
+                                                    <button class="btn-success">No Violation</button>
+                                                    break;
+                                                case 1:
+                                                    <button class="btn-warning">Moderate</button>
+                                                    break;
+                                                case 2:
+                                                    <button class="btn-danger">Severe</button>
+                                                    break;
+                                                default:
+                                                    <button class="btn-success">No Violation</button>
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-block" onclick="showGasStation('@i.GasStationId')">Show GasStation</button>
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("respond", "Investigator", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <div class="col-md-8">
+                                <div class="col-md-offset-0">
+                                    <select class="form-control input-validation-error" data-val="true" data-val-number="The field Violation must be a number." data-val-required="The Violation field is required." id="Violation" multiple="multiple" name="Severity" aria-describedby="Violation-error" aria-invalid="true">
+                                        <option value="0">No Violation</option>
+                                        <option value="1">Moderate</option>
+                                        <option value="2">Severe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <input class="form-control" type="hidden" id="GasStationId" name="GasStationId" value="@i.GasStationId" />
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-offset-0">
+                                    <input type="submit" value="Remove&raquo;" class="btn btn-default" />
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <script>
+        function showGasStation(id) {
+            var modal = document.getElementById("GasStationmodal'" + id);
+            modal.style.display = "block";
+            var close = document.getElementsByClassName("close")[0];
+            close.onclick = function () {
+                modal.style.display = "none";
+            }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</div>
+

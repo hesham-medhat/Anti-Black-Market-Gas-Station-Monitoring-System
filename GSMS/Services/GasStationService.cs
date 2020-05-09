@@ -23,15 +23,19 @@ namespace GSMS.Services
             }
             if (!grant)
             {
-                /*
-                UnderInvestigation susbicious = new UnderInvestigation()
+                if (db.UnderInvestigations.Find(Id) == null)
                 {
-                    GasStationId = Id,
-                    InvestigatorId = "81e5a966-6e05-4d5a-bac4-de47b8eac47b", //Should be Emitted
-                    IssueDatetime = DateTime.Now
-                };
-                db.UnderInvestigations.Add(susbicious);
-                */
+                    Random random = new Random();
+                    int toSkip = random.Next(0, db.Investigators.Count());
+                    Investigator randomInvestigator = db.Investigators.OrderBy(b => Guid.NewGuid()).Skip(toSkip).Take(1).First();
+                    UnderInvestigation susbicious = new UnderInvestigation()
+                    {
+                        GasStationId = Id,
+                        InvestigatorId = randomInvestigator.Id,
+                        IssueDatetime = DateTime.Now
+                    };
+                    db.UnderInvestigations.Add(susbicious);
+                }
             }
             else
             {

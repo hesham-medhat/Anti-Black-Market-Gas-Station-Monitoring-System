@@ -17,6 +17,11 @@ namespace GSMS.Services
             return db.GasStations.SingleOrDefault(b => b.Id == Id);
         }
 
+        public Investigator getInvestigator(string Id)
+        {
+            return db.Investigators.SingleOrDefault(b => b.Id == Id);
+        }
+
         public Citizen getCitizen(string Id)
         {
             return db.Citizens.SingleOrDefault(b => b.Id == Id);
@@ -35,9 +40,16 @@ namespace GSMS.Services
             db.SaveChanges();
         }
 
-        public void CreateInvestigator(string Id, string Name)
+        public void CreateInvestigator(string Email, string Name)
         {
-            throw new NotImplementedException();
+            User user = db.Users.SingleOrDefault(b => b.Email == Email);
+            Investigator investigator = new Investigator()
+            {
+                Id = user.Id,
+                Name = Name
+            };
+            db.Investigators.Add(investigator);
+            db.SaveChanges();
         }
 
         public void CreateCitizen(string Email, string Name)

@@ -99,4 +99,22 @@
         </table>
     </div>
 
+    @if (TempData["Result"] != null)
+    {
+        if ((bool)TempData["Result"])
+        {
+            <div class="col-md-4 alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success!</strong> Your request has been recorded.
+            </div>
+        }
+        else
+        {
+            <div class="col-md-4 alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Failed!</strong> This request is invalid.
+            </div>
+        }
+    }
+
 </div>

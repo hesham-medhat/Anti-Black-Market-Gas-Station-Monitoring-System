@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using GSMS.Models;
+﻿using System.Web.Mvc;
 using GSMS.Services;
 using static GSMS.Models.GasStationViewModels;
 
@@ -33,6 +28,13 @@ namespace GSMS.Controllers
             GasStation gs = (GasStation)Session["user"];
             bool grant = (model.RefillQuantity + gs.EstimatedFuelQuantity <= gs.TotalTankSize);
             Service.SubmitRefill(model.RefillQuantity, gs.Id, grant);
+            if(grant)
+            {
+                TempData["Result"] = true;
+            } else
+            {
+                TempData["Result"] = false;
+            }
             return RedirectToLocal("/Account/Admin");
         }
 
@@ -40,7 +42,16 @@ namespace GSMS.Controllers
         public ActionResult serveUser(ServeUserModel model)
         {
             GasStation gs = (GasStation)Session["user"];
+            decimal start = gs.EstimatedFuelQuantity;
             Service.SubmitServeUSer(model.ServeUserQuantity, model.UserName, gs.Id);
+            if (start == gs.EstimatedFuelQuantity)
+            {
+                TempData["Result"] = false;
+            }
+            else
+            {
+                TempData["Result"] = true;
+            }
             return RedirectToLocal("/Account/Admin");
         }
     }
