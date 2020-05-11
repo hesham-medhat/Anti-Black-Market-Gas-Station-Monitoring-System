@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSMS", "GSMS\GSMS.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gas Station and Citizen Testing", "Gas Station and Citizen Testing\Gas Station and Citizen Testing.csproj", "{119E2B1F-0697-4797-B7B9-F1BD745ECF80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Investigations Testing", "Investigations Testing\Investigations Testing.csproj", "{F7699E4D-77EE-49F9-9F5E-3B9AF505A5B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{119E2B1F-0697-4797-B7B9-F1BD745ECF80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{119E2B1F-0697-4797-B7B9-F1BD745ECF80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{119E2B1F-0697-4797-B7B9-F1BD745ECF80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7699E4D-77EE-49F9-9F5E-3B9AF505A5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7699E4D-77EE-49F9-9F5E-3B9AF505A5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7699E4D-77EE-49F9-9F5E-3B9AF505A5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7699E4D-77EE-49F9-9F5E-3B9AF505A5B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
